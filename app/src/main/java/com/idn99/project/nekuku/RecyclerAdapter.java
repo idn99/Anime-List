@@ -1,6 +1,7 @@
 package com.idn99.project.nekuku;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         holder.img.setImageResource(data.get(position).getGambarData());
         holder.tv1.setText(data.get(position).getJudulData());
         holder.tv2.setText(data.get(position).getMusimData());
+        holder.position = position;
     }
 
     @Override
@@ -48,12 +50,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         private CircleImageView img;
         private TextView tv1,tv2;
+        private int position;
+        private LinearLayout linearLayout;
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.img_list);
             tv1 = itemView.findViewById(R.id.tv1_list);
             tv2 = itemView.findViewById(R.id.tv2_list);
+            linearLayout = itemView.findViewById(R.id.linear_list);
+            linearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, Deskripsi.class);
+                    intent.putExtra("data", data.get(position));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }
